@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: LoginPage(),
-      home: MyHomePage(title: '天气'),
+      home: LoginPage(),
+      //home: MyHomePage(title: '天气'),
     );
   }
 }

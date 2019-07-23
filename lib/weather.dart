@@ -15,5 +15,12 @@ class DataBean{
   String airTips;
   String tem;//当前温度
   String tem1;//最高温度
-  String tem2;//最低温度
+  String tem2;
+
+  @override
+  String toString() {
+    return 'DataBean{day: $day, week: $week, wea: $wea, air: $air, airLevel: $airLevel, airTips: $airTips, tem: $tem, tem1: $tem1, tem2: $tem2}';
+  } //最低温度
+
+
 }

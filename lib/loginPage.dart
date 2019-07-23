@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigoAccent,
+      //backgroundColor: Colors.indigoAccent,
       body: Container(
         child: Stack(
           //堆叠布局

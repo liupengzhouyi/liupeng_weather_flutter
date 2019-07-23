@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:liupeng_weather_flutter/weather.dart';
 
 class MyHomePage extends StatefulWidget {
+
   MyHomePage({Key key, this.title}) : super(key: key);
+
   final String title;
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -20,7 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Color containerColor = Colors.black38;
   // 成员变量： 网址
   String url = "https://www.tianqiapi.com/api/?version=v1&cityid=101080201";
-
+  // 复写初始化函数
   @override
   void initState() {
     super.initState();
@@ -48,10 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
         dataBean.wea = data[i]["wea"];
         weather.dataBean.add(dataBean);
       }
-
       setState(() {
       });
     });
+
   }
 
   @override
@@ -65,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
             fit: BoxFit.fill,
             height: double.infinity,
           ),
-          //页面
+          //页面-单子滚动视图
           SingleChildScrollView(
             child: body(),
           )
