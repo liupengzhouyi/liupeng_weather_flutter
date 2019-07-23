@@ -5,6 +5,32 @@ import 'package:liupeng_weather_flutter/talk/talkcasuallyApp.dart';
 
 // main()和runApp()
 
+// V 2.1.0 版本
+
+void main() {
+  runApp(
+    new TalkcasuallyApp(),
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // V 2.0.0 版本
 /*void main() {
   // runApp()函数作为参数，它是一个Widget，
@@ -24,12 +50,6 @@ import 'package:liupeng_weather_flutter/talk/talkcasuallyApp.dart';
   );
 }*/
 
-// V 2.1.0 版本
 
-void main() {
-  runApp(
-    new TalkcasuallyApp(),
-  );
-}
 
 
