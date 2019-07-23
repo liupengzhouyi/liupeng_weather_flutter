@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:liupeng_weather_flutter/loginPage.dart';
+import 'package:liupeng_weather_flutter/talk/loginPage.dart';
 import 'package:liupeng_weather_flutter/weather/myHomePage.dart';
 
 
