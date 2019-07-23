@@ -1,8 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'weather.dart';
+import 'package:liupeng_weather_flutter/weather/weather.dart';
 import 'package:flutter/material.dart';
-import 'package:liupeng_weather_flutter/weather.dart';
+import 'package:liupeng_weather_flutter/weather/weather.dart';
 
 class MyHomePage extends StatefulWidget {
 

@@ -42,7 +42,7 @@ class _Paly extends State<PalyView> {
     http.get(url).then((http.Response response) {
       var date = json.decode(response.body);
       this.str = date['city'];
-      // 当你调用 setState()， 将合并你提供的对象到当前的状态中
+      //当你调用 setState()， 将合并你提供的对象到当前的状态中
       this.setState((){});
     });
   }
