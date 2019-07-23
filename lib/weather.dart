@@ -4,6 +4,7 @@ class Weather{
   String updateTime;//更新时间
   List<DataBean> dataBean = new List();//天气数据
 }
+
 class DataBean{
   DataBean();
   String day;//日期
