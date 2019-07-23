@@ -5,7 +5,7 @@
 #### 介绍
 
 * 项目名称：liupeng_weather_flutter
-* 概要：一个查看天气信息的App
+* 概要：一个查看天气信息的App,一个可以聊天的App.
 * 作者: 刘鹏
 * 日期： 2019年7月22日
 * 时间：17点41分
@@ -38,7 +38,7 @@ English Version
 #### Introduction
 
 * The name of the project: liupeng_weather_flutter
-* Summary: An app for viewing weather information
+* Summary: An app for viewing weather information. An App to chat with others.
 * Author: Liu Peng
 * Date: 22 July 2019
 * Time: 17:41
