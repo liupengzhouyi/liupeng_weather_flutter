@@ -15,10 +15,6 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> {
 
-  // Flutter框架提供了一个名为TextField的质感设计控件，
-  // ，具有用于自定义输入字段行为的属性。
-  // 作为该项目的第一个有状态控件，它需要一些修改才能管理内部状态更改。
-
   //要管理与文本字段的交互，需要使用TextEditingController对象。
   // 您将使用它来读取输入字段的内容，并在发送消息后清除该字段。
   final TextEditingController _textEditingController = new TextEditingController();
@@ -33,42 +29,50 @@ class ChatScreenState extends State<ChatScreen> {
   // 定义一个名为_buildTextComposer()的私有方法，
   // 使用已配置的TextField控件返回Container控件。
   Widget _buildTextComposer() {
-    return new Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-      ),
-      // 添加一个行控件
-      child: new Row(
-        // ___输入框___ (发送按钮)
-        children: <Widget>[
-          // 将TextField控件包装在Flexible控件中，
-          // 这将使Row自动将文本字段的大小用于使用按钮未使用的剩余空间。
-          new Flexible(
-            // 子控件：输入框
-            child: new TextField(
-              // 控制器
-              controller: _textEditingController,
-              // 提交消息时通知，需要使用onSubmitted的回调方法
-              onSubmitted: _handleSubmitted,
-              // 显示的字段
-              decoration: new InputDecoration.collapsed(
-                hintText: '发送消息',
-              ),
-            ),
+
+    return new IconTheme(
+        data: new IconThemeData(
+          // _buildTextComposer()方法可以从其封装State对象访问BuildContext对象，
+          // 您不需要明确地将上下文传递给该方法。
+          color: Theme.of(context).accentColor,
+        ),
+        child: new Container(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 8.0,
           ),
-          // 按钮
-          new Container(
-            margin: new EdgeInsets.symmetric(horizontal: 4.0),
-            // 按钮子控件
-            child: new IconButton(
-              // 图标
-              icon: new Icon(Icons.send),
-              // 回调函数
-              onPressed: () => this._handleSubmitted(this._textEditingController.text),
-            ),
-          )
-        ],
-      ),
+          // 添加一个行控件
+          child: new Row(
+            // ___输入框___ (发送按钮)
+            children: <Widget>[
+              // 将TextField控件包装在Flexible控件中，
+              // 这将使Row自动将文本字段的大小用于使用按钮未使用的剩余空间。
+              new Flexible(
+                // 子控件：输入框
+                child: new TextField(
+                  // 控制器
+                  controller: _textEditingController,
+                  // 提交消息时通知，需要使用onSubmitted的回调方法
+                  onSubmitted: _handleSubmitted,
+                  // 显示的字段
+                  decoration: new InputDecoration.collapsed(
+                    hintText: '发送消息',
+                  ),
+                ),
+              ),
+              // 按钮
+              new Container(
+                margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                // 按钮子控件
+                child: new IconButton(
+                  // 图标
+                  icon: new Icon(Icons.send),
+                  // 回调函数
+                  onPressed: () => this._handleSubmitted(this._textEditingController.text),
+                ),
+              )
+            ],
+          ),
+        )
     );
   }
 
