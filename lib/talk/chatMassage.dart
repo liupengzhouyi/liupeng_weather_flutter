@@ -5,16 +5,24 @@ const String _name = "hekaiyou";
 
 class ChatMessage extends StatelessWidget {
   // 构造函数
-  ChatMessage({this.text});
+  ChatMessage({this.text, this.animationController});
   // 成员变量
   final String text;
+  // 添加一个成员变量来存储动画控制器。
+  final AnimationController animationController;
   // 复写的方法
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
-      // 返回一个Row控件
-      child: new Row(
+    return new SizeTransition(
+      sizeFactor: new CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeOut
+      ),
+      axisAlignment: 0.0,
+      child: new Container(
+        margin: const EdgeInsets.symmetric(vertical: 60),
+        // 返回一个Row控件
+        child: new Row(
         // Row控件: CrossAxisAlignment.start会沿垂直轴给出最高位置。
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -23,7 +31,7 @@ class ChatMessage extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16.0),
             child: new CircleAvatar(
               child: new Text(
-                _name[0]
+                text[0],
               ),
             ),
           ),
@@ -48,8 +56,9 @@ class ChatMessage extends StatelessWidget {
           )
         ],
       ),
+      ),
     );
   }
 
-
 }
+

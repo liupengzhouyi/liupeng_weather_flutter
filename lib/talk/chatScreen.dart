@@ -16,7 +16,7 @@ class ChatScreen extends StatefulWidget {
 
 
 
-class ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   //要管理与文本字段的交互，需要使用TextEditingController对象。
   // 您将使用它来读取输入字段的内容，并在发送消息后清除该字段。
@@ -26,25 +26,50 @@ class ChatScreenState extends State<ChatScreen> {
   // 每个列表项都是一个ChatMessage实例，而且需要将消息列表初始化为空列表。
   final List<ChatMessage> _messages = <ChatMessage>[];
 
-  int iii = 0;
 
 
   // 要在用户提交消息时通知，
   // 需要使用onSubmitted参数提供一个私有回调方法_handleSubmitted()。
   // 在当前用户从文本字段发送消息时，我们的应用程序应该将新消息添加到消息列表中。
-  void _handleSubmitted(String text) {
+  // 实例化一个AnimationController对象并将动画的运行时间指定为700毫秒
+ /* void _handleSubmitted(String text) {
     // 清除该字段
     this._textEditingController.clear();
     ChatMessage chatMessage = new ChatMessage(
       text: text,
+      animationController: new AnimationController(
+        duration: new Duration(
+          // 动画的运行时间指定为700毫秒
+          milliseconds: 700
+        ),
+      ),
     );
     //您调用setState()来修改_messages并让框架知道这部分控件树已经更改，并且需要重建UI。
     // 在setState()中只能执行同步操作，否则框架可能在操作完成之前重新构建窗口控件。
     setState(() {
-      _messages.insert(iii, chatMessage);
-      //this.iii = iii + 1;
+      _messages.insert(0, chatMessage);
     });
+    //
+    chatMessage.animationController.forward();
+  }*/
+  void _handleSubmitted(String text) {
+    _textEditingController.clear();
+    ChatMessage message = new ChatMessage(
+        text: text,
+        animationController: new AnimationController(
+            duration: new Duration(milliseconds: 700),
+            // 想要将我们的ChatScreenState作为vsync，
+            // 需要在ChatScreenState类定义中包含一个TickerProviderStateMixin。
+            vsync: this
+        )
+    );
+    setState((){
+      _messages.insert(0, message);
+    });
+    message.animationController.forward();
   }
+
+
 
   // 定义一个名为_buildTextComposer()的私有方法，
   // 使用已配置的TextField控件返回Container控件。
@@ -145,6 +170,18 @@ class ChatScreenState extends State<ChatScreen> {
       )
     );
   }
+
+  // 通过在ChatScreenState中覆盖dispose()方法
+  // 不再需要资源时释放资源
+  @override
+  void dispose() {
+    for (ChatMessage chatMessage in _messages) {
+      chatMessage.animationController.dispose();
+    }
+    super.dispose();
+  }
+
+
 }
 
 
