@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:liupeng_weather_flutter/talk/chatMassage.dart';
 
 // V 2.1.0
-
 
 //在Flutter中，如果要在窗口控件中可视化呈现状态数据，
 // 则应将此数据封装在State对象中。
@@ -13,17 +13,37 @@ class ChatScreen extends StatefulWidget {
   State createState() => new ChatScreenState();
 }
 
+
+
+
 class ChatScreenState extends State<ChatScreen> {
 
   //要管理与文本字段的交互，需要使用TextEditingController对象。
   // 您将使用它来读取输入字段的内容，并在发送消息后清除该字段。
   final TextEditingController _textEditingController = new TextEditingController();
 
+  // 在我们的ChatScreenState控件定义中，添加名为_messages的List成员来表示每个聊天消息。
+  // 每个列表项都是一个ChatMessage实例，而且需要将消息列表初始化为空列表。
+  final List<ChatMessage> _messages = <ChatMessage>[];
+
+  int iii = 0;
+
+
   // 要在用户提交消息时通知，
   // 需要使用onSubmitted参数提供一个私有回调方法_handleSubmitted()。
+  // 在当前用户从文本字段发送消息时，我们的应用程序应该将新消息添加到消息列表中。
   void _handleSubmitted(String text) {
     // 清除该字段
     this._textEditingController.clear();
+    ChatMessage chatMessage = new ChatMessage(
+      text: text,
+    );
+    //您调用setState()来修改_messages并让框架知道这部分控件树已经更改，并且需要重建UI。
+    // 在setState()中只能执行同步操作，否则框架可能在操作完成之前重新构建窗口控件。
+    setState(() {
+      _messages.insert(iii, chatMessage);
+      //this.iii = iii + 1;
+    });
   }
 
   // 定义一个名为_buildTextComposer()的私有方法，
@@ -85,15 +105,47 @@ class ChatScreenState extends State<ChatScreen> {
           '会说你就多说点'
         ),
       ),
-      // 告诉应用程序如何显示文本输入控件
-      body: this._buildTextComposer(),
+      // 垂直布置其直接的子控件列表（children）。
+      // Column可以占用多个子窗口控件，这是包括一个滚动列表和一个输入字段的行。
+      body: new Column(
+        children: <Widget>[
+          // 作为ListView的父级。
+          // 这告诉框架让接收到消息的列表展开以填充Column高度，而TextField保持固定的大小。
+          new Flexible(
+            // 为消息列表添加一个ListView窗口控件, 我们选择ListView.builder构造函数，
+            // 因为默认构造函数不会自动检测其children的突然变化。
+            child: new ListView.builder(
+              // padding对于消息文本周围的空白
+              padding: new EdgeInsets.all(8.0),
+              // reverse使ListView从屏幕底部开始
+              reverse: true,
+              // itemBuilder对于在[index]中构建每个窗口控件的函数。
+              // 因为我们不需要当前的构建上下文，
+              // 所以我们可以忽略IndexedWidgetBuilder的第一个参数。
+              // 命名参数_（下划线）是一个表示不会被使用的约定。
+              itemBuilder: (_, int index) => _messages[index],
+              // itemCount指定列表中的消息数
+              itemCount: _messages.length,
+            ),
+          ),
+          // 在用于显示消息的UI和用于撰写消息的文本输入字段之间绘制水平的横线。
+          new Divider(
+            height: 1.0,
+          ),
+          // 作为文本编辑区的父级，
+          // 可用于定义背景图像、填充、边距和其他常见布局细节。
+          new Container(
+            // 创建一个定义背景颜色的新BoxDecoration对象。
+            decoration: new BoxDecoration(
+              color: Theme.of(context).cardColor,
+            ),
+            child: _buildTextComposer(),
+          ),
+        ],
+      )
     );
   }
 }
-
-
-
-
 
 
 // V 2.1.0 版本
