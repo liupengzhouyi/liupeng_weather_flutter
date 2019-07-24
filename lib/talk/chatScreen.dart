@@ -26,6 +26,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   // 每个列表项都是一个ChatMessage实例，而且需要将消息列表初始化为空列表。
   final List<ChatMessage> _messages = <ChatMessage>[];
 
+  // 定义_isComposing，一个私有成员变量，只要用户在输入字段中键入，该变量就是true。
+  bool _isComposing = false;
+
 
 
   // 要在用户提交消息时通知，
@@ -54,6 +57,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }*/
   void _handleSubmitted(String text) {
     _textEditingController.clear();
+    setState(() {
+      // 当文本字段被清除时，修改_handleSubmitted将_isComposing更新为false。
+      _isComposing = false;
+    });
     ChatMessage message = new ChatMessage(
         text: text,
         animationController: new AnimationController(
@@ -74,7 +81,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   // 定义一个名为_buildTextComposer()的私有方法，
   // 使用已配置的TextField控件返回Container控件。
   Widget _buildTextComposer() {
-
     return new IconTheme(
         data: new IconThemeData(
           // _buildTextComposer()方法可以从其封装State对象访问BuildContext对象，
@@ -102,6 +108,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   decoration: new InputDecoration.collapsed(
                     hintText: '发送消息',
                   ),
+                  // 文本输入框的回调函数
+                  onChanged: (String text) {
+                    setState(() {
+                      _isComposing = text.length > 0;
+                    });
+                  },
                 ),
               ),
               // 按钮
@@ -112,7 +124,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   // 图标
                   icon: new Icon(Icons.send),
                   // 回调函数
-                  onPressed: () => this._handleSubmitted(this._textEditingController.text),
+                  onPressed: _isComposing ? () => _handleSubmitted(_textEditingController.text) : null
                 ),
               )
             ],
