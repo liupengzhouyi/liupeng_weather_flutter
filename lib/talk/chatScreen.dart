@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liupeng_weather_flutter/talk/chatMassage.dart';
 
@@ -119,13 +120,23 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               // 按钮
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                // 按钮子控件
-                child: new IconButton(
-                  // 图标
-                  icon: new Icon(Icons.send),
-                  // 回调函数
-                  onPressed: _isComposing ? () => _handleSubmitted(_textEditingController.text) : null
-                ),
+                // 根据系统选择样式
+                  // 按钮子控件
+                child: Theme.of(context).platform == TargetPlatform.iOS
+                  ? new CupertinoButton(
+                      child: new Text('发送'),
+                      onPressed: _isComposing
+                        ? () => _handleSubmitted(_textEditingController.text)
+                        : null,
+                    )
+                  : new IconButton(
+                      // 图标
+                      icon: new Icon(Icons.send),
+                      // 回调函数
+                      onPressed: _isComposing
+                        ? () => _handleSubmitted(_textEditingController.text)
+                        : null,
+                    ),
               )
             ],
           ),
@@ -141,45 +152,57 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         title: new Text(
           '会说你就多说点'
         ),
+        // elevation属性定义了AppBar的z坐标。z坐标值为0.0没有阴影（iOS），4.0的值具有定义的阴影（Android）。
+        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
       ),
       // 垂直布置其直接的子控件列表（children）。
       // Column可以占用多个子窗口控件，这是包括一个滚动列表和一个输入字段的行。
-      body: new Column(
-        children: <Widget>[
-          // 作为ListView的父级。
-          // 这告诉框架让接收到消息的列表展开以填充Column高度，而TextField保持固定的大小。
-          new Flexible(
-            // 为消息列表添加一个ListView窗口控件, 我们选择ListView.builder构造函数，
-            // 因为默认构造函数不会自动检测其children的突然变化。
-            child: new ListView.builder(
-              // padding对于消息文本周围的空白
-              padding: new EdgeInsets.all(8.0),
-              // reverse使ListView从屏幕底部开始
-              reverse: true,
-              // itemBuilder对于在[index]中构建每个窗口控件的函数。
-              // 因为我们不需要当前的构建上下文，
-              // 所以我们可以忽略IndexedWidgetBuilder的第一个参数。
-              // 命名参数_（下划线）是一个表示不会被使用的约定。
-              itemBuilder: (_, int index) => _messages[index],
-              // itemCount指定列表中的消息数
-              itemCount: _messages.length,
+      body: new Container(
+        child: new Column(
+          children: <Widget>[
+            // 作为ListView的父级。
+            // 这告诉框架让接收到消息的列表展开以填充Column高度，而TextField保持固定的大小。
+            new Flexible(
+              // 为消息列表添加一个ListView窗口控件, 我们选择ListView.builder构造函数，
+              // 因为默认构造函数不会自动检测其children的突然变化。
+              child: new ListView.builder(
+                // padding对于消息文本周围的空白
+                padding: new EdgeInsets.all(8.0),
+                // reverse使ListView从屏幕底部开始
+                reverse: true,
+                // itemBuilder对于在[index]中构建每个窗口控件的函数。
+                // 因为我们不需要当前的构建上下文，
+                // 所以我们可以忽略IndexedWidgetBuilder的第一个参数。
+                // 命名参数_（下划线）是一个表示不会被使用的约定。
+                itemBuilder: (_, int index) => _messages[index],
+                // itemCount指定列表中的消息数
+                itemCount: _messages.length,
+              ),
             ),
-          ),
-          // 在用于显示消息的UI和用于撰写消息的文本输入字段之间绘制水平的横线。
-          new Divider(
-            height: 1.0,
-          ),
-          // 作为文本编辑区的父级，
-          // 可用于定义背景图像、填充、边距和其他常见布局细节。
-          new Container(
-            // 创建一个定义背景颜色的新BoxDecoration对象。
-            decoration: new BoxDecoration(
-              color: Theme.of(context).cardColor,
+            // 在用于显示消息的UI和用于撰写消息的文本输入字段之间绘制水平的横线。
+            new Divider(
+              height: 1.0,
             ),
-            child: _buildTextComposer(),
-          ),
-        ],
-      )
+            // 作为文本编辑区的父级，
+            // 可用于定义背景图像、填充、边距和其他常见布局细节。
+            new Container(
+              // 创建一个定义背景颜色的新BoxDecoration对象。
+              decoration: new BoxDecoration(
+                color: Theme.of(context).cardColor,
+              ),
+              child: _buildTextComposer(),
+            ),
+          ],
+        ),
+        // 将顶级Column包装在Container控件中，使其在上边缘呈浅灰色边框。
+        // 这个边框将有助于在iOS上将AppBar与body区分开来。同时要在Android上隐藏边框，
+        decoration: Theme.of(context).platform == TargetPlatform.iOS ?
+          new BoxDecoration(
+            border: new Border(
+              top: new BorderSide(color: Colors.grey[200])
+            )
+          ) : null,
+      ),
     );
   }
 
