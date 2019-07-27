@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../flutterStudio.dart';
+import 'package:liupeng_weather_flutter/login/flutterStudio.dart';
 
 void main() {
   runApp(
