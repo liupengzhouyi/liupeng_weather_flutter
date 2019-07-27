@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../flutterStudio.dart';
+
 void main() {
   runApp(
     new MaterialApp(
@@ -81,46 +83,32 @@ class _LiupengLogin extends State<LiupengLogin> {
                 ),
               ),
               new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   new RaisedButton(
                     color: Theme.of(context).primaryColor,
                     child: new Text('登录'),
                     textColor: Colors.black,
-                    onPressed: null,
+                    onPressed: () {
+                      String name = this._textEditingControllerInputUserID.text;
+                      print(name);
+                    },
                   ),
                   new RaisedButton(
                     color: Theme.of(context).primaryColor,
                     child: new Text('登录'),
                     textColor: Colors.black,
-                    onPressed: null,
-                  ),
-                ],
-              ),
-              new RaisedButton(
-                color: Theme.of(context).primaryColor,
-                child: new Text('登录'),
-                textColor: Colors.black,
-                onPressed: null,
-              ),
-              new Row(
-                children: <Widget>[
-                  new Center(
-                    child: new Row(
-                      children: <Widget>[
-                        new RaisedButton(
-                          color: Theme.of(context).primaryColor,
-                          child: new Text('登录'),
-                          textColor: Colors.black,
-                          onPressed: null,
-                        ),
-                        new RaisedButton(
-                          color: Theme.of(context).primaryColor,
-                          child: new Text('忘记密码'),
-                          textColor: Colors.black,
-                          onPressed: null,
-                        ),
-                      ],
-                    ),
+                    onPressed: () {
+                      String password = this._textEditingControllerInputUserPassword.text;
+                      print(password);
+                      if (this._textEditingControllerInputUserID.text == "liupeng") {
+                        if (this._textEditingControllerInputUserPassword.text == "123456") {
+                          Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new MyApp()));
+                        }
+                      }
+                    },
                   ),
                 ],
               ),
