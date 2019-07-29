@@ -50,20 +50,13 @@ class LiupengListView extends StatelessWidget {
             color: Colors.red,
           ),
           onPressed: () {
-            print('${number}');
+            // print('${number}');
             Navigator.push(context, new MaterialPageRoute(builder: (context) => new ShowPage(number:'${number}')),);
           }
         )
       ],
     );
   }
-
-  // 点击跳转
-  _goNewPage(String number) {
-    print('${number}');
-    // Navigator.push(context, new MaterialPageRoute(builder: (context) => new ShowPage(number:number,)),);
-  }
-
 }
 
 class GetLiupengListView extends StatelessWidget {

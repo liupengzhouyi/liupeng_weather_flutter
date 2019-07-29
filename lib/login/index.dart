@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liupeng_weather_flutter/login/errorPage.dart';
 
 import 'package:liupeng_weather_flutter/login/flutterStudio.dart';
 
@@ -106,7 +107,11 @@ class _LiupengLogin extends State<LiupengLogin> {
                       if (this._textEditingControllerInputUserID.text == "liupeng") {
                         if (this._textEditingControllerInputUserPassword.text == "123456") {
                           Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new MyApp()));
+                        } else {
+                          Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new ErrorPage()));
                         }
+                      } else {
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new ErrorPage()));
                       }
                     },
                   ),
