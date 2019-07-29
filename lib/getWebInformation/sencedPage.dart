@@ -19,7 +19,6 @@ class ShowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-
         title: new Text('Fetch Data Example'),
       ),
       body: new Center(
@@ -27,11 +26,18 @@ class ShowPage extends StatelessWidget {
           future: fetchPost(this.number),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return new Text(snapshot.data.title);
+              // return new Text(snapshot.data.title);
+              return new Column(
+                children: <Widget>[
+                  new Text("USERID:" + "${snapshot.data.userId}"),
+                  new Text("ID:" + "${snapshot.data.id}"),
+                  new Text("TITLE:" + "${snapshot.data.title}"),
+                  new Text("BODY:" + "${snapshot.data.body}"),
+                ],
+              );
             } else if (snapshot.hasError) {
               return new Text("${snapshot.error}");
             }
-
             // By default, show a loading spinner
             return new CircularProgressIndicator();
           },
